@@ -2,7 +2,7 @@ name: Using run
 on: [push]
 env:
   START_VALUE: 1
-  NEXT_VALUE_FILE: NEXT_VALUE
+  NEXT_VALUE_FILE: next_value.txt
 jobs:
   first:
     runs-on: ubuntu-latest
