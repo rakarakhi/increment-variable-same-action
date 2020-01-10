@@ -2,25 +2,32 @@ name: Using run
 on: [push]
 env:
   START_VALUE: 1
-  NEXT_VALUE_FILE_NAME: NEXT_VALUE
+  NEXT_VALUE_FILE: NEXT_VALUE
 jobs:
   first:
     runs-on: ubuntu-latest
     steps:
     - name: Run a one-line script
-      run: expr $START_VALUE + 10 | ${{ env.NEXT_VALUE_FILE_NAME }}
+      run: expr $START_VALUE + 10 | tee ${{ env.NEXT_VALUE_FILE }}
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
       with:
         name: NEXT_VALUE
-        path: ./${{ env.NEXT_VALUE_FILE_NAME }}
+        path: ./${{ env.NEXT_VALUE_FILE }}
   second:
     runs-on: ubuntu-latest
     steps:
-    - name: Run a one-line script
-      run: expr $(cat ${{ env.NEXT_VALUE_FILE_NAME }}) + 10 | ${{ env.NEXT_VALUE_FILE_NAME }}
-    - name: Upload artifact
-      uses: actions/upload-artifact@v1.0.0
+    - name: Download artifact
+      uses: actions/download-artifact@v1.0.0
       with:
-        name: NEXT_VALUE
-        path: ./${{ env.NEXT_VALUE_FILE_NAME }}
+        name: ${{ env.NEXT_VALUE_FILE }}
+    - name: Run a one-line script
+      run: find ${{ env.NEXT_VALUE_FILE }}
+              
+    #- name: Run a one-line script
+    #  run: expr $(cat ${{ env.NEXT_VALUE_FILE_NAME }}) + 10 | tee ${{ env.NEXT_VALUE_FILE_NAME }}
+    #- name: Upload artifact
+    #  uses: actions/upload-artifact@v1.0.0
+    #  with:
+    #    name: NEXT_VALUE
+    #    path: ./${{ env.NEXT_VALUE_FILE_NAME }}
