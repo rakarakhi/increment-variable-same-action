@@ -1,0 +1,10 @@
+name: Using run
+on: [push]
+env:
+  START_VALUE: 99
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Run a one-line script
+      run: expr $START_VALUE + 10 
