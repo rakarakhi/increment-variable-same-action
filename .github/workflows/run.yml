@@ -1,10 +1,26 @@
 name: Using run
 on: [push]
 env:
-  START_VALUE: 99
+  START_VALUE: 1
+  NEXT_VALUE_FILE_NAME: NEXT_VALUE
 jobs:
-  build:
+  first:
     runs-on: ubuntu-latest
     steps:
     - name: Run a one-line script
-      run: expr $START_VALUE + 10 
+      run: expr $START_VALUE + 10 | ${{ env.NEXT_VALUE_FILE_NAME }}
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: NEXT_VALUE
+        path: ./${{ env.NEXT_VALUE_FILE_NAME }}
+  second:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Run a one-line script
+      run: expr $(cat ${{ env.NEXT_VALUE_FILE_NAME }}) + 10 | ${{ env.NEXT_VALUE_FILE_NAME }}
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: NEXT_VALUE
+        path: ./${{ env.NEXT_VALUE_FILE_NAME }}
