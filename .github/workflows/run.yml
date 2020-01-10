@@ -23,7 +23,7 @@ jobs:
       with:
         name: NEXT_VALUE
     - name: Run a one-line script
-      run: find ${{ env.NEXT_VALUE_FILE }}
+      run: find .
               
     #- name: Run a one-line script
     #  run: expr $(cat ${{ env.NEXT_VALUE_FILE_NAME }}) + 10 | tee ${{ env.NEXT_VALUE_FILE_NAME }}
