@@ -13,7 +13,7 @@ jobs:
       uses: actions/upload-artifact@v1.0.0
       with:
         name: NEXT_VALUE
-        path: ./${{ env.NEXT_VALUE_FILE }}
+        path: ${{ env.NEXT_VALUE_FILE }}
   second:
     runs-on: ubuntu-latest
     steps:
