@@ -29,7 +29,11 @@ jobs:
       run: |
         variable=$(cat ./NEXT_VALUE/${{ env.NEXT_VALUE_FILE }})
         expr $variable + 10 | tee ${{ env.NEXT_VALUE_FILE }}
-
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: NEXT_VALUE
+        path: ${{ env.NEXT_VALUE_FILE }}
   third:
     runs-on: ubuntu-latest
     needs: [second]
@@ -44,4 +48,8 @@ jobs:
       run: |
         variable=$(cat ./NEXT_VALUE/${{ env.NEXT_VALUE_FILE }})
         expr $variable + 10 | tee ${{ env.NEXT_VALUE_FILE }}
-
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: NEXT_VALUE
+        path: ${{ env.NEXT_VALUE_FILE }}
