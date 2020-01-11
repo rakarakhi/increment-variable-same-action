@@ -1,23 +1,20 @@
 name: Redis Service Example
-
-on:
-  push:
-    branches:
-    - master
-  pull_request:
-    branches:
-    - master
-
+env:
+  START_VALUE: 1
+on: [push]
 jobs:
   container-job:
     runs-on: ubuntu-latest
-
     container:
       image:  node:10.16-jessie
-
     services:
       redis:
         image: redis
         ports:
         - 6379:6379
         options: --entrypoint redis-server
+  first:
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Initialize the variable
+        run: which redis-cli
